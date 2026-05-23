@@ -351,18 +351,29 @@
                 <footer class="mt-8 pt-4" style="border-top: 1px solid rgba(0,0,0,0.06)">
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
 
-                        {{-- Kiri: copyright --}}
+                        {{-- Kiri: Logo + Copyright --}}
                         <div class="flex items-center gap-2">
                             @php
                                 $appName = \App\Models\AppSetting::get('app_name', 'Stockify');
                                 $compName = \App\Models\AppSetting::get('company_name', '');
+                                $appLogo = \App\Models\AppSetting::get('app_logo');
+                                $initial = strtoupper(substr($appName, 0, 1));
                             @endphp
-                            <div class="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
-                                style="background: linear-gradient(135deg, #1D9E75, #0F6E56)">
-                                <span class="text-white font-bold" style="font-size:9px">
-                                    {{ strtoupper(substr($appName, 0, 1)) }}
-                                </span>
-                            </div>
+
+                            {{-- Logo Dinamis (sama seperti login & sidebar) --}}
+                            @if ($appLogo)
+                                <img src="{{ asset('storage/' . $appLogo) }}" alt="{{ $appName }}"
+                                    class="w-5 h-5 object-contain rounded-md"
+                                    style="background: #fff; padding: 2px; border: 1px solid #e5e7eb;">
+                            @else
+                                <div class="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
+                                    style="background: linear-gradient(135deg, #1D9E75, #0F6E56)">
+                                    <span class="text-white font-bold" style="font-size:9px">
+                                        {{ $initial }}
+                                    </span>
+                                </div>
+                            @endif
+
                             <p class="text-xs text-gray-400">
                                 &copy; {{ date('Y') }}
                                 <span class="font-medium text-gray-500">{{ $compName ?: $appName }}</span>
