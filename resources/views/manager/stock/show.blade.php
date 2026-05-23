@@ -210,7 +210,6 @@
                     <p class="text-sm text-red-700">
                         Transaksi <strong>ditolak</strong>.
                         @if ($transaction->notes)
-                            Alasan: <em>{{ $transaction->notes }}</em>
                         @endif
                     </p>
                 </div>
