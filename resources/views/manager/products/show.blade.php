@@ -16,21 +16,6 @@
             </svg>
             Kembali ke Daftar Produk
         </a>
-        <div class="flex items-center gap-2">
-            <a href="{{ route('manager.stock.create-in') }}"
-               class="flex items-center gap-2 h-9 px-4 text-sm font-semibold text-white rounded-xl transition"
-               style="background:#1D9E75"
-               onmouseover="this.style.background='#0F6E56'"
-               onmouseout="this.style.background='#1D9E75'">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Barang Masuk
-            </a>
-            <a href="{{ route('manager.stock.create-out') }}"
-               class="flex items-center gap-2 h-9 px-4 text-sm font-semibold text-red-600 border border-red-200 rounded-xl hover:bg-red-50 transition">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Barang Keluar
-            </a>
-        </div>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">

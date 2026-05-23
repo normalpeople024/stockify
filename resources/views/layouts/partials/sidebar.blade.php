@@ -3,7 +3,19 @@
 $role    = auth()->user()->role;
 $current = request()->route()?->getName() ?? '';
 
-function isActive(string $prefix, string $current): bool {
+function isActive($prefix, string $current): bool 
+{
+    // Jika $prefix adalah array (multiple routes)
+    if (is_array($prefix)) {
+        foreach ($prefix as $p) {
+            if (str_starts_with($current, $p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Jika hanya string (perilaku lama)
     return str_starts_with($current, $prefix);
 }
 
@@ -61,7 +73,7 @@ $current === 'admin.reports.stock') !!}
 
 {!! navLink(route('admin.reports.transactions'), 'Laporan Transaksi',
 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01',
-$current === 'admin.reports.transactions') !!}
+isActive(['admin.reports.transactions', 'admin.stock.show'], $current) ) !!}
 
 {!! navLink(route('admin.reports.activity'), 'Aktivitas Pengguna',
 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
@@ -102,7 +114,7 @@ $current === 'manager.stock.opname') !!}
 
 {!! navLink(route('manager.products.index'), 'Produk',
 'M20 7l-8-4-8 4m16 0v10l-8 4m-8-4V7m8 4l8-4M4 7l8 4',
-isActive('manager.products', $current)) !!}
+isActive(['manager.products','manager.products.show'], $current)) !!}
 
 {!! navLink(route('manager.suppliers.index'), 'Supplier',
 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75',
@@ -116,7 +128,7 @@ $current === 'manager.reports.stock') !!}
 
 {!! navLink(route('manager.reports.transactions'), 'Laporan transaksi',
 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
-isActive('manager.reports.transactions', $current)) !!}
+isActive(['manager.reports', 'manager.stock.show'], $current) ) !!}
 
 @elseif($role === 'staff')
 

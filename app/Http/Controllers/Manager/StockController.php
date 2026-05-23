@@ -43,7 +43,7 @@ class StockController extends Controller
 
         $this->service->createIn($validated);
 
-        return redirect()->route('manager.stock.index')
+        return redirect()->route('manager.reports.transactions')
             ->with('success', 'Barang masuk berhasil dicatat. Menunggu konfirmasi staff.');
     }
 
@@ -65,7 +65,7 @@ class StockController extends Controller
 
         try {
             $this->service->createOut($validated);
-            return redirect()->route('manager.stock.index')
+            return redirect()->route('manager.reports.transactions')
                 ->with('success', 'Barang keluar berhasil dicatat. Menunggu konfirmasi staff.');
         } catch (\Exception $e) {
             return back()->withErrors(['quantity' => $e->getMessage()])->withInput();
@@ -131,7 +131,7 @@ class StockController extends Controller
             }
         });
 
-        return redirect()->route('manager.stock.index')
+        return redirect()->route('manager.reports.transactions')
             ->with('success', 'Stock opname berhasil disimpan. Stok produk telah diperbarui.');
     }
 
