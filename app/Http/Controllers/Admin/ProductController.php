@@ -108,7 +108,14 @@ class ProductController extends Controller
 
     public function destroy(int $id)
     {
-        $this->service->delete($id);
+        $result = $this->service->delete($id);
+
+        if ($result === false) {
+            // Produk punya transaksi, hanya dinonaktifkan
+            return redirect()->route('admin.products.index')
+                ->with('warning', 'Produk tidak bisa dihapus karena memiliki riwayat transaksi. Produk telah dinonaktifkan.');
+        }
+
         return redirect()->route('admin.products.index')
             ->with('success', 'Produk berhasil dihapus.');
     }

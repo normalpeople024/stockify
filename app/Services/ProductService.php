@@ -78,20 +78,23 @@ class ProductService
     }
     public function delete(int $id): bool
     {
-        return DB::transaction(function () use ($id) {
-            $product = $this->repo->find($id);
+        $product = $this->repo->find($id);
 
-            // Hapus gambar jika ada
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
+        // Cek apakah produk punya transaksi stok
+        $hasTransactions = $product->stockTransactions()->exists();
 
-            // Hapus attributes terkait (jika ada)
-            $product->attributes()->delete();
+        if ($hasTransactions) {
+            // Jika punya transaksi, nonaktifkan saja (jangan hapus)
+            $product->update(['is_active' => false]);
+            return false; // return false = nonaktif, bukan dihapus
+        }
 
-            // Hapus product
-            return $this->repo->delete($id);
-        });
+        // Jika tidak punya transaksi, hapus gambar lalu hapus produk
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+
+        return $this->repo->delete($id);
     }
 
     public function getLowStock()

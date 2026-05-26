@@ -50,15 +50,7 @@ class ProductRepository
 
     public function delete(int $id): bool
     {
-        $product = Product::findOrFail($id);
-
-        // Hapus gambar dari storage
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
-        }
-
-        // Hard Delete (benar-benar dihapus dari database)
-        return $product->forceDelete();
+        return Product::findOrFail($id)->delete();
     }
 
     public function getLowStock(): Collection

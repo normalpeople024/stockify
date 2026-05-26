@@ -309,6 +309,28 @@
                     </div>
                 @endif
 
+                {{-- Tambahkan setelah flash success, sebelum flash error --}}
+                @if (session('warning'))
+                    <div id="flash-warning"
+                        class="flex items-center gap-3 text-amber-700 rounded-xl px-4 py-3 text-sm"
+                        style="background: linear-gradient(135deg,#FFFBEB,#FEF3C7); border:1px solid rgba(245,158,11,0.2); box-shadow:0 1px 8px rgba(245,158,11,0.1)">
+                        <div class="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-3.5 h-3.5 text-amber-600" fill="none" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 6v4M8 11.5v.5M6.29 2.57L1.14 11a2 2 0 001.71 3h10.3a2 2 0 001.71-3L9.71 2.57a2 2 0 00-3.42 0z"
+                                    stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <span class="flex-1 font-medium">{{ session('warning') }}</span>
+                        <button onclick="this.parentElement.remove()" class="text-amber-400 hover:text-amber-600">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 16 16">
+                                <path d="M4 4l8 8M4 12L12 4" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+                @endif
+
                 @if (session('error') || $errors->any())
                     <div id="flash-error" class="flex items-start gap-3 text-red-700 rounded-xl px-4 py-3 text-sm"
                         style="background: linear-gradient(135deg, #FFF5F5, #FEE2E2); border: 1px solid rgba(239,68,68,0.2); box-shadow: 0 1px 8px rgba(239,68,68,0.1)">
